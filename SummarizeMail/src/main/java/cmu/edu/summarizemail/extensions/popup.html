@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>My Extension Popup</title>
+    </head>
+    <body>
+        <form id="myForm">
+            <label for="textInput">Enter text:</label>
+            <textarea id="textInput" rows="4" cols="50"></textarea>
+            <br>
+            <button type="submit">Submit</button>
+        </form>
+        <script>
+            // Add an event listener to the form to handle the submit event
+            document.querySelector("#myForm").addEventListener("submit", function(event) {
+                event.preventDefault(); // Prevent the form from submitting
+
+                // Get the value of the text input
+                let text = document.querySelector("#textInput").value;
+
+                // Send the text to the API
+                fetch("http://localhost:8080/summarize?text="+text, {
+                    method: "GET"
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        // Handle the API response
+                        console.log(data);
+                    })
+                    .catch(error => {
+                        // Handle any errors
+                        console.error(error);
+                    });
+            });
+        </script>
+    </body>
+</html>
